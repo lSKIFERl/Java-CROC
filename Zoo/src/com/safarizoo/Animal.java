@@ -66,7 +66,6 @@ class Animal {
     }
 
     /**
-     *
      * @return запись о последнем заболевании
      */
     public Ill getIllStory() {
@@ -74,7 +73,6 @@ class Animal {
     }
 
     /**
-     *
      * @return запись о последней кормёжке
      */
     public Feed getFeedStory() {
@@ -82,7 +80,6 @@ class Animal {
     }
 
     /**
-     *
      * @return приставленный сотрудник
      */
     public Employee getEmployee() {
@@ -90,7 +87,6 @@ class Animal {
     }
 
     /**
-     *
      * @return номер вальера
      */
     public Aviary getAviary() {
@@ -98,7 +94,6 @@ class Animal {
     }
 
     /**
-     *
      * @return имя
      */
     public String getName() {

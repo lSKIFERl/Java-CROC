@@ -50,11 +50,17 @@ public class ZooPark {
         animalList.get(0).addIllStory(new Date(), "Простуда"); //*Шифу простудился*
         employeeList.remove(2); // уволняем сотрудника за то, что кормил По печеньками
 
-        //пользуясь прелестями ооп, а именно обращаемся к объектам, которые инициализировали ранее через другие объекты,
+        //пользуясь прелестями ооп, а именно обращаемся к объектам, которые инициализировали, ранее через другие объекты
         // выводим информацию на терминал
-        System.out.println("Вальер " + animalList.get(0).getAviary().getAviaryNumber() + " Очищен " + animalList.get(0).getAviary().getCleaningStory());
-        System.out.println(animalList.get(0).getName() + " Заболел " + animalList.get(0).getIllStory().getIllName() + " " + animalList.get(0).getIllStory().getIllDate());
-        System.out.println(animalList.get(1).getName() + " покормлен " + animalList.get(1).getFeedStory().getFeeder().getName());
+        System.out.println("Вальер " + animalList.get(0).getAviary().getAviaryNumber() + " Очищен " +
+                animalList.get(0).getAviary().getCleaningStory());
+
+        System.out.println(animalList.get(0).getName() + " Заболел " + animalList.get(0).getIllStory().getIllName() +
+                " " + animalList.get(0).getIllStory().getIllDate());
+
+        System.out.println(animalList.get(1).getName() + " покормлен " +
+                animalList.get(1).getFeedStory().getFeeder().getName());
+
         for (int i = 0; i < 2; i++) {
             System.out.println("На содержании " + animalList.get(i).getName());
             System.out.println("Сотрудник " + employeeList.get(i).getName());
