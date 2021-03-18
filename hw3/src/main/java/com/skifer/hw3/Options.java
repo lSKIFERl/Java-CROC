@@ -23,12 +23,6 @@ interface Ground{
      */
     void setWheelCount(int count);
 
-    /**
-     * Изначальное количество колёс укажет, сколько должно быть колёс у нормального транспорта этого типа
-     * @param count колёса
-     */
-    void setDefaultWheelCount(int count);
-
 }
 
 /**
@@ -59,12 +53,6 @@ interface Air{
      * @param count крылья/лопасти
      */
     void setWingCount(int count);
-
-    /**
-     * Сколько должно быть крыльев или лопастей у целой машины
-     * @param count крылья/лопасти
-     */
-    void setDefaultWingCount(int count);
 
     /**
      * Укажет на состояние хвоста. Повреждённый хвост уменьшит маневренность транспорта
@@ -109,12 +97,6 @@ interface Water{
      */
     void setNumberOfDecks(int decks);
 
-    /**
-     * Установит нормальное количество палуб для судна
-     * @param decks палубы
-     */
-    void setDefaultNumberOfDecks(int decks);
-
 }
 
 /**
@@ -141,15 +123,9 @@ interface Motorized{
     void setNumberOfEngines(int count);
 
     /**
-     * Установит нормальное количество моторов/двигателей
-     * @param count количество моторов/двигателей
+     * Вернёт тип двигателя
+     * @return тип двигателя
      */
-    void setDefaultNumberOfEngines(int count);
-
-    /**
-     * Установит тип двигателя
-     * @param type тип двигателя
-     */
-    void setEngineType(Engine type);
+    Engine getEngineType();
 
 }

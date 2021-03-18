@@ -5,9 +5,24 @@ package com.skifer.hw3;
  */
 public abstract class Transport {
 
+    /**
+     * Показывает физическое состояние транспорта
+     */
     private State state;
+
+    /**
+     * Показывает статус аренды транспорта
+     */
     private Rent rent;
+
+    /**
+     * Идентификатор транспорта
+     */
     private int id;
+
+    /**
+     * Цена на аренду транспорта
+     */
     private int rentPrice;
 
     /**
@@ -89,6 +104,8 @@ public abstract class Transport {
      */
     public void setState(State state) {
         this.state = state;
+        if(state.ordinal() > 3)
+            setRent(Rent.NOT_AVAILABLE);
         setRentPrice(getRentPrice() - (getRentPrice() / (state.ordinal() + 5))* state.ordinal());
     }
 
