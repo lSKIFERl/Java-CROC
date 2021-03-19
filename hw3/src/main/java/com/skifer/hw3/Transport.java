@@ -1,5 +1,7 @@
 package com.skifer.hw3;
 
+import com.skifer.hw3.states.*;
+
 /**
  * Описывает основную модель поведения и состояния для любого транспорта компании, а также его стоимость и номер
  */
@@ -9,6 +11,11 @@ public abstract class Transport {
      * Показывает физическое состояние транспорта
      */
     private State state;
+
+    /**
+     * Суммарный показатель физического состояния транспорта
+     */
+    private int sumState;
 
     /**
      * Показывает статус аренды транспорта
@@ -26,52 +33,69 @@ public abstract class Transport {
     private int rentPrice;
 
     /**
+     * Начальная цена на аренду
+     */
+    private int defaultPrice;
+
+    /**
+     * Вместительность
+     */
+    private int capacity;
+
+    /**
+     * Грузоподъёмность транспорта
+     */
+    private String payload;
+
+    /**
      * Конструктор с типичными для всего арендуемого транспорта параметрами
      * @param state физическое состояние
      * @param rent статус аренды
      * @param id идентификатор
      * @param rentPrice цена за аренду
+     * @param capacity Вместимость
+     * @param payload грузоподъемность
      */
-    public Transport(State state, Rent rent, int id, int rentPrice) {
+    public Transport(State state, Rent rent, int id, int rentPrice, int capacity, String payload) {
         this.state = state;
         this.rent = rent;
         this.id = id;
         this.rentPrice = rentPrice;
+        this.defaultPrice = rentPrice;
+        this.capacity = capacity;
+        this.payload = payload;
+    }
+
+    public int getSumState() {
+        return sumState;
+    }
+
+    protected void setSumState(int sumState) {
+        this.sumState = sumState;
+        setState(State.values()[sumState]);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public String getPayload() {
+        return payload;
     }
 
     /**
-     * Если необходим ремонт, то вызывается этот метод и устанавливается статус "Недоступен"
-     * Также транспорт отправляется в соответствующий своим повреждениям сервис
-     * После его возвращения он сразу становится доступен,
-     * даже если имеет незначительные повреждения (царапины, вмятины)
-     * или не в идеальном состоянии (грязный, облезла краска)
+     * Устанавливает состояние в зависимости от состояния компонентов
      */
     public void repair() {
-        if (getState().ordinal() > 2) {
-            setRent(Rent.NOT_AVAILABLE);
-            service(getState());
+        if (this.sumState > 5) {
+            setState(State.BROKEN);
         } else {
-            cosmeticService(getState());
+            setState(State.values()[this.sumState]);
         }
-        setRent(Rent.FREE);
-    }
-
-    /**
-     * Сервис косметического ремонта, также справится с лёгкими повреждениями
-     * @param state состояние, нужно чтобы определить, справится ли сервис с задачей
-     */
-    public void cosmeticService(State state) {
-        if(state.ordinal() < 3)
-            setState(State.PERFECT);
-    }
-
-    /**
-     * Сервис полного ремонта, не имеет специалистов по косметическому ремонту
-     * @param state состояние, нужно для опреления подходит ли задача сервису
-     */
-    public void service(State state){
-        if(state.ordinal() > 2)
-            setState(State.ACCEPTABLE);
     }
 
     /**
@@ -104,9 +128,10 @@ public abstract class Transport {
      */
     public void setState(State state) {
         this.state = state;
-        if(state.ordinal() > 3)
+        if(state.ordinal() > 2)
             setRent(Rent.NOT_AVAILABLE);
-        setRentPrice(getRentPrice() - (getRentPrice() / (state.ordinal() + 5))* state.ordinal());
+        else { setRent(Rent.FREE); }
+        setRentPrice(defaultPrice - (defaultPrice / (state.ordinal() + 5)) * state.ordinal());
     }
 
     /**
