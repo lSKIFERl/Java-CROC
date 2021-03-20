@@ -2,35 +2,34 @@ package com.safarizoo.zoo;
 
 import com.safarizoo.animal.*;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 public class ZooPark {
 
     /**
      * Список животных
      */
-    private List<Animal> animalList;
+    private Animal[] animalList;
 
     /**
      * Список сотрудников
      */
-    private List<Employee> employeeList;
+    private Employee[] employeeList;
 
     /**
      * Список вальеров
      */
-    private List<Aviary> aviaryList;
+    private Aviary[] aviaryList;
 
 
     /**
      * Конструктор зоопарка
      */
     public ZooPark() {
-        animalList = new ArrayList<>();
-        employeeList = new ArrayList<>();
-        aviaryList = new ArrayList<>();
+        animalList = new Animal[1];
+        employeeList = new Employee[1];
+        aviaryList = new Aviary[1];
     }
 
     /**
@@ -39,7 +38,7 @@ public class ZooPark {
      * @return животное
      */
     public Animal getAnimal(int index) {
-        return animalList.get(index);
+        return animalList[index];
     }
 
     /**
@@ -48,7 +47,7 @@ public class ZooPark {
      * @return сотрудник
      */
     public Employee getEmployee(int index) {
-        return employeeList.get(index);
+        return employeeList[index];
     }
 
     /**
@@ -57,11 +56,11 @@ public class ZooPark {
      * @return вольер
      */
     public Aviary getAviary(int index) {
-        return aviaryList.get(index);
+        return aviaryList[index];
     }
 
     public void cleanAviary(int index) {
-        aviaryList.get(index).addCleaningStory(new Date());
+        aviaryList[index].addCleaningStory(new Date());
     }
 
     /**
@@ -70,7 +69,8 @@ public class ZooPark {
      * @param employee сотрудник
      */
     public void addEmployee(Employee employee) {
-        this.employeeList.add(employee);
+        this.employeeList[employeeList.length-1] = employee;
+        employeeList = Arrays.copyOf(employeeList, employeeList.length + 1);
     }
 
     /**
@@ -79,7 +79,8 @@ public class ZooPark {
      * @param aviary вольер
      */
     public void addAviary(Aviary aviary) {
-        this.aviaryList.add(aviary);
+        this.aviaryList[aviaryList.length-1] = aviary;
+        aviaryList = Arrays.copyOf(aviaryList, aviaryList.length + 1);
     }
 
     /**
@@ -100,7 +101,8 @@ public class ZooPark {
         } else {
             System.out.println("Вольер " + aviary.getAviaryNumber() + " занят");
         }
-        this.animalList.add(animal);
+        this.animalList[animalList.length-1] = animal;
+        animalList = Arrays.copyOf(animalList, animalList.length + 1);
     }
 
     /**
@@ -112,30 +114,34 @@ public class ZooPark {
      */
     public void deleteAnimal(int animal, int employee, int aviary) {
         try {
-            if (employeeList.get(employee).getAnimal() == animalList.get(animal)) {
-                employeeList.get(employee).unboundAnimal();
+            if (employeeList[employee].getAnimal() == animalList[animal]) {
+                employeeList[employee].unboundAnimal();
             } else {
-                System.out.println(employeeList.get(employee).toString() + "\nНе привзяан к" +
-                        animalList.get(animal).getName());
+                System.out.println(employeeList[employee].toString() + "\nНе привзяан к" +
+                        animalList[animal].getName());
             }
         } catch (Exception e) {
             System.err.println("Такого сотрудника не существует");
         }
         try {
 
-            if (aviaryList.get(aviary).getAnimal() == animalList.get(animal)) {
-                aviaryList.get(aviary).unboundAnimal();
+            if (aviaryList[aviary].getAnimal() == animalList[animal]) {
+                aviaryList[aviary].unboundAnimal();
             } else {
-                System.out.println(aviaryList.get(aviary).toString() + "\nНе привзяан к" + animalList.get(animal).getName());
+                System.out.println(aviaryList[aviary].toString() + "\nНе привзяан к" + animalList[animal].getName());
             }
-            this.animalList.remove(animal);
         } catch (Exception e) {
             System.err.println("Такого вольера не существует");
         }
+        this.animalList[animal] = null;
     }
 
+    /**
+     * Удаление сотрудника
+     * @param index номер в массиве
+     */
     public void deleteEmployee(int index) {
-        this.employeeList.remove(index);
+        this.employeeList[index] = null;
     }
 
     /**

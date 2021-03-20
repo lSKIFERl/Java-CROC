@@ -2,6 +2,7 @@ package com.safarizoo.zoo;
 
 import com.safarizoo.animal.Animal;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Stack;
 
@@ -17,14 +18,14 @@ public class Aviary {
     private Animal animal;
 
     /** История уборок */
-    private Stack<Date> cleaningStory;
+    private Date[] cleaningStory;
 
     /**
      * Конструктор вольеров зоопарка, нужно указать лишь номер вальера
      * @param aviaryNumber номер вальера
      */
     public Aviary(int aviaryNumber) {
-        cleaningStory = new Stack<>();
+        cleaningStory = new Date[1];
         this.aviaryNumber = aviaryNumber;
     }
 
@@ -57,7 +58,8 @@ public class Aviary {
      */
     public void addCleaningStory(Date date)
     {
-        cleaningStory.add(date);
+        cleaningStory[cleaningStory.length-1] = date;
+        cleaningStory = Arrays.copyOf(cleaningStory, cleaningStory.length + 1);
     }
 
     /**
@@ -73,7 +75,7 @@ public class Aviary {
      * @return дата последней очистки
      */
     public Date getCleaningStory() {
-        return cleaningStory.peek();
+        return cleaningStory[cleaningStory.length-2];
     }
 
     @Override
