@@ -2,6 +2,7 @@ package com.safarizoo.animal;
 
 import com.safarizoo.zoo.Employee;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Stack;
 
@@ -20,10 +21,10 @@ public class Animal {
     private int age;
 
     /** История болезней */
-    private Stack<Ill> illStory;
+    private Ill[] illStory;
 
     /** История кормления */
-    private Stack<Feed> feedStory;
+    private Feed[] feedStory;
 
     /**
      * Инициализация животного
@@ -35,8 +36,8 @@ public class Animal {
         this.name = name;
         this.age = age;
         this.specie = specie;
-        illStory = new Stack<>();
-        feedStory = new Stack<>();
+        illStory = new Ill[1];
+        feedStory = new Feed[1];
     }
 
     /**
@@ -45,7 +46,8 @@ public class Animal {
      * @param illName название болезни
      */
     public void addIllStory(Date date, String illName) {
-        illStory.add(new Ill(date,illName));
+        illStory[illStory.length-1] = new Ill(date,illName);
+        illStory = Arrays.copyOf(illStory, illStory.length + 1);
     }
 
     /**
@@ -54,21 +56,22 @@ public class Animal {
      * @param feeder кормилец
      */
     public void addFeedStory(Date date, Employee feeder) {
-        feedStory.add(new Feed(date, feeder));
+        feedStory[feedStory.length-1] = new Feed(date, feeder);
+        feedStory = Arrays.copyOf(feedStory, feedStory.length + 1);
     }
 
     /**
      * @return запись о последнем заболевании
      */
     public Ill getIllStory() {
-        return illStory.peek();
+        return illStory[illStory.length-2];
     }
 
     /**
      * @return запись о последней кормёжке
      */
     public Feed getFeedStory() {
-        return feedStory.peek();
+        return feedStory[feedStory.length-2];
     }
 
     /**
