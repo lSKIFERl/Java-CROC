@@ -1,12 +1,9 @@
-package task;
+package com.skifer.prototype.task;
 
-import exceptions.IllegalInteraptException;
-import exceptions.TooLongStringException;
-import org.junit.jupiter.api.Assertions;
+import com.skifer.prototype.exceptions.IllegalInteraptException;
+import com.skifer.prototype.exceptions.TooLongStringException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.InputMismatchException;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,4 +1,4 @@
-package exceptions;
+package com.skifer.prototype.exceptions;
 
 /**
  * Возникает при попытке изменить задачу "в процессе" или "завершённую"

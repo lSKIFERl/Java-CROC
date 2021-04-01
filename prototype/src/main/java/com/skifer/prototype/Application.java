@@ -1,4 +1,6 @@
-import menu.Menu;
+package com.skifer.prototype;
+
+import com.skifer.prototype.menu.Menu;
 
 import java.io.*;
 
@@ -9,7 +11,7 @@ public class Application {
 
     public static void main(String[] args) {
 
-        //Пробуем десериализовать файл менюшки, если такого нет, создаём пока объект  menu.Menu
+        //Пробуем десериализовать файл менюшки, если такого нет, создаём пока объект  Menu
         Menu menu;
         try (
                 FileInputStream fis = new FileInputStream(FILE_NAME);

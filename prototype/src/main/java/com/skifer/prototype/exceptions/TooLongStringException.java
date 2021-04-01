@@ -1,4 +1,4 @@
-package exceptions;
+package com.skifer.prototype.exceptions;
 
 /**
  * Возникает, если строка слишком длинная

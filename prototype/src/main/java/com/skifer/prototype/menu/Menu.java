@@ -1,9 +1,9 @@
-package menu;
+package com.skifer.prototype.menu;
 
-import exceptions.IllegalInteraptException;
-import exceptions.TooLongStringException;
-import task.Status;
-import task.Task;
+import com.skifer.prototype.exceptions.IllegalInteraptException;
+import com.skifer.prototype.exceptions.TooLongStringException;
+import com.skifer.prototype.task.Status;
+import com.skifer.prototype.task.Task;
 
 import java.io.*;
 import java.util.HashMap;

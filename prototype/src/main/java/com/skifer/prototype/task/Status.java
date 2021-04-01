@@ -1,4 +1,4 @@
-package task;
+package com.skifer.prototype.task;
 
 public enum Status {
 

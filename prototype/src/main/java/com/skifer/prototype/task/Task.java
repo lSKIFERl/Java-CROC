@@ -1,7 +1,7 @@
-package task;
+package com.skifer.prototype.task;
 
-import exceptions.IllegalInteraptException;
-import exceptions.TooLongStringException;
+import com.skifer.prototype.exceptions.IllegalInteraptException;
+import com.skifer.prototype.exceptions.TooLongStringException;
 
 import java.io.*;
 import java.util.InputMismatchException;
