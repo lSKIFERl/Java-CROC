@@ -4,22 +4,23 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
-import com.skifer.film.Films;
-import com.skifer.film.model.Film;
+import com.skifer.films.Films;
+import com.skifer.films.film.Film;
 import com.skifer.people.People;
-import com.skifer.people.model.Functions;
-import com.skifer.people.model.Person;
+import com.skifer.people.hooman.Functions;
+import com.skifer.people.hooman.Person;
 
 import javax.xml.bind.*;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+/**
+ * Класс конвертации, основной метод конвертации реализован здесь
+ */
 public class Converter {
 
     /**
@@ -80,32 +81,19 @@ public class Converter {
                 person.setName(i);
                 for (Film film : films.getFilms()) {
                     List<Functions> functions = new ArrayList<>();
-                    if (film.getDirectors().contains(i)) {
-                        functions.add(new Functions("Режисёр"));
-                    }
                     if (film.getScreenWriters().contains(i)) {
                         functions.add(new Functions("Сценарист"));
                     }
-                    person.addFilm(film.getTitle(), functions);
+                    if (film.getDirectors().contains(i)) {
+                        functions.add(new Functions("Режиссер"));
+                    }
+                    if(!functions.isEmpty()) {
+                        person.addFilm(film.getTitle(), functions);
+                    }
                 }
                 people.getPeople().add(person);
             }
         return people;
-    }
-
-    public <T> void objectToFileXml(String filePath, T object) throws JAXBException {
-        JAXBContext jaxbContext = JAXBContext.newInstance(object.getClass());
-        Marshaller marshaller = jaxbContext.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        marshaller.marshal(object, new File(filePath));
-        marshaller.marshal(object, System.out);
-    }
-
-    public <T> T fileXmlToObject (String filePath, Class<T> type) throws JAXBException {
-        File file = new File(filePath);
-        JAXBContext jaxbContext = JAXBContext.newInstance(type);
-        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-        return (T) unmarshaller.unmarshal(file);
     }
 
 }

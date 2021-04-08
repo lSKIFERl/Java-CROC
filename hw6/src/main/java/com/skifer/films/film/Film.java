@@ -1,4 +1,4 @@
-package com.skifer.film.model;
+package com.skifer.films.film;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -28,6 +28,9 @@ public class Film {
     @XmlElement(name = "director")
     List<FilmMakers> directors = new ArrayList<>();
 
+    /**
+     * Класс фильма
+     */
     public Film(String title, String description, List<FilmMakers> screenWriters, List<FilmMakers> directors) {
         this.title = title;
         this.description = description;
@@ -35,6 +38,9 @@ public class Film {
         this.directors = directors;
     }
 
+    /**
+     * Класс фильма
+     */
     public Film() {
     }
 
@@ -54,6 +60,10 @@ public class Film {
         this.description = description;
     }
 
+    /**
+     * Возвращает имена сценаристов
+     * @return список сценаристов
+     */
     public List<String> getScreenWriters() {
         List<String> writers = new ArrayList<>();
         for(FilmMakers filmMakers: screenWriters) {
@@ -66,6 +76,10 @@ public class Film {
         this.screenWriters = screenWriters;
     }
 
+    /**
+     * Возвращает список режисёров
+     * @return список режисёров
+     */
     public List<String> getDirectors() {
         List<String> directorsList = new ArrayList<>();
         for(FilmMakers filmMakers: directors) {
@@ -82,7 +96,7 @@ public class Film {
         if (this == o) return true;
         if (!(o instanceof Film)) return false;
         Film film = (Film) o;
-        return Objects.equals(title, film.title) && Objects.equals(description, film.description) && Objects.equals(screenWriters, film.screenWriters) && Objects.equals(directors, film.directors);
+        return Objects.equals(title, film.getTitle()) && Objects.equals(description, film.getDescription()) && Objects.equals(this.getScreenWriters(), film.getScreenWriters()) && Objects.equals(this.getDirectors(), film.getDirectors());
     }
 
     @Override
