@@ -1,6 +1,7 @@
 package com.skifer.database.repository;
 
 import com.skifer.database.model.GameModel;
+import org.apache.derby.impl.jdbc.EmbedConnection;
 import org.apache.derby.jdbc.EmbeddedDataSource;
 
 import java.sql.*;
@@ -136,10 +137,11 @@ public class GameRepository {
                 if (columns.get(i).equals("id") || columns.get(i).equals("price")) {
                     sql = sql.concat(items.get(i).toString());
                 } else {
-                    sql = sql.concat("'" + items.get(i).toString() + "',");
+                    sql = sql.concat("'" + items.get(i).toString() + "'");
                 }
+                sql = sql.concat(" AND ");
             }
-            sql = sql.substring(0, sql.length() - 1);
+            sql = sql.substring(0, sql.length() - 5);
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 GameModel game = new GameModel(
@@ -176,9 +178,11 @@ public class GameRepository {
                 if (columns.get(i).equals("id") || columns.get(i).equals("price")) {
                     sql = sql.concat(items.get(i).toString());
                 } else {
-                    sql = sql.concat("'" + items.get(i).toString() + "',");
+                    sql = sql.concat("'" + items.get(i).toString() + "'");
                 }
+                sql = sql.concat(" AND ");
             }
+            sql = sql.substring(0, sql.length() - 5);
             statement.execute(sql);
         }
     }
@@ -189,23 +193,9 @@ public class GameRepository {
      * @throws SQLException Возникает при ошибке обращения к базе данных
      */
     public void delete(GameModel game) throws SQLException {
-        String sql =
-                "DELETE FROM " + table + " WHERE " +
-                        "id = ?," +
-                        "title = ?," +
-                        "genre = ?," +
-                        "price = ?," +
-                        "gamePassAvailable = ?";
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, game.getTitle());
-            statement.setString(2, game.getGenre());
-            statement.setInt(3, game.getPrice());
-            statement.setBoolean(4, game.isGamePassAvailable());
-            Date release = new Date(game.getReleaseDate().getTime());
-            statement.setDate(5, release);
-            statement.setInt(6, game.getId());
-            statement.execute();
+             Statement statement = connection.createStatement()) {
+            statement.execute("DELETE FROM " + table + " WHERE " + "id = " + game.getId());
         }
     }
 

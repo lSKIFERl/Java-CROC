@@ -1,8 +1,8 @@
-package com.skifer.database.repository;
+package com.skifer.database.service;
 
 import com.skifer.database.dbprovider.DataBaseProvider;
 import com.skifer.database.model.GameModel;
-import com.skifer.database.service.DataBaseService;
+import com.skifer.database.repository.GameRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class GameRepositoryTest {
+class DataBaseServiceTest {
 
     DataBaseProvider provider;
     GameRepository repository;
@@ -33,9 +33,10 @@ class GameRepositoryTest {
             repository = new GameRepository(provider.getDataSource(), "Games");
             repository.dropTable("Games");
             repository = new GameRepository(provider.getDataSource(), "Games");
-            repository.insert(skyrim);
-            repository.insert(ut2004);
-            repository.insert(minecraft);
+            service = new DataBaseService(repository);
+            service.insert(skyrim);
+            service.insert(ut2004);
+            service.insert(minecraft);
         } catch (IOException | SQLException e) {
             e.printStackTrace();
         }
@@ -55,7 +56,7 @@ class GameRepositoryTest {
         gameObjectsList.add(minecraft);
 
         try {
-            expectedGameList = repository.selectAll();
+            expectedGameList = service.selectAll();
             Assertions.assertEquals(expectedGameList, gameObjectsList);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -68,8 +69,8 @@ class GameRepositoryTest {
     @Test
     void selectWhere() {
         try {
-            Assertions.assertEquals(repository.selectWhere(Arrays.asList("genre"), Arrays.asList("RPG")), Arrays.asList(skyrim));
-            Assertions.assertEquals(repository.selectWhere(Arrays.asList("gamePassAvailable"), Arrays.asList(true)),
+            Assertions.assertEquals(service.selectWhere(Arrays.asList("genre"), Arrays.asList("RPG")), Arrays.asList(skyrim));
+            Assertions.assertEquals(service.selectWhere(Arrays.asList("gamePassAvailable"), Arrays.asList(true)),
                     Arrays.asList(skyrim, ut2004));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -83,8 +84,8 @@ class GameRepositoryTest {
     void deleteWhere() {
         List<GameModel> gameList = Arrays.asList(skyrim, ut2004);
         try {
-            repository.deleteWhere(Arrays.asList("genre", "price"), Arrays.asList("Sandbox", 2199));
-            Assertions.assertEquals(repository.selectAll(), gameList);
+            service.deleteWhere(Arrays.asList("genre", "price"), Arrays.asList("Sandbox", 2199));
+            Assertions.assertEquals(service.selectAll(), gameList);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -98,7 +99,7 @@ class GameRepositoryTest {
         List<GameModel> gameList = Arrays.asList(skyrim, ut2004);
         try {
             repository.delete(minecraft);
-            Assertions.assertEquals(repository.selectAll(), gameList);
+            Assertions.assertEquals(service.selectAll(), gameList);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -113,7 +114,7 @@ class GameRepositoryTest {
         skyrim.setTitle("Skyrim ULTRA SPECIAL LEGENDARY REMASTERED EDITION FOR playstation 3");
         try {
             repository.update(skyrim);
-            Assertions.assertEquals(repository.selectWhere(Arrays.asList("genre"), Arrays.asList("RPG")), Arrays.asList(skyrim));
+            Assertions.assertEquals(service.selectWhere(Arrays.asList("genre"), Arrays.asList("RPG")), Arrays.asList(skyrim));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -127,8 +128,8 @@ class GameRepositoryTest {
         GameModel subnautica = new GameModel(4, "Subnautica", "Sandbox",
                 799, false, new Date(2014-1900, Calendar.DECEMBER, 16));
         try {
-            repository.insert(subnautica);
-            Assertions.assertEquals(repository.selectWhere(Arrays.asList("id"), Arrays.asList(4)), Arrays.asList(subnautica));
+            service.insert(subnautica);
+            Assertions.assertEquals(service.selectWhere(Arrays.asList("id"), Arrays.asList(4)), Arrays.asList(subnautica));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -140,8 +141,8 @@ class GameRepositoryTest {
     @Test
     void dropTable() {
         try {
-            repository.dropTable("Games");
-            Assertions.assertThrows(SQLException.class, () -> repository.selectAll());
+            service.dropTable("Games");
+            Assertions.assertThrows(SQLException.class, () -> service.selectAll());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
