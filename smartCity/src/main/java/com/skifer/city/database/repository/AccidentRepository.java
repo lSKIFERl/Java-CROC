@@ -64,11 +64,11 @@ public class AccidentRepository {
             statement.executeUpdate(
                     "CREATE TABLE " + table + "(" +
                             "id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," +
-                            "time DATE" +
+                            "time TIME, " +
                             "region VARCHAR(255), " +
                             "street VARCHAR(255), " +
                             "points INTEGER, " +
-                            "accident BOOLEAN, " +
+                            "accident BOOLEAN" +
                             ")"
             );
         }
@@ -212,8 +212,7 @@ public class AccidentRepository {
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            Date time = new Date(accident.getTime().getTime());
-            statement.setTime(1, new Time(time.getTime()));
+            statement.setTime(1, accident.getTime());
             statement.setString(2, accident.getRegion());
             statement.setString(3, accident.getStreet());
             statement.setInt(4, accident.getPoints());
@@ -234,8 +233,7 @@ public class AccidentRepository {
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            Date time = new Date(accident.getTime().getTime());
-            statement.setTime(1, new Time(time.getTime()));
+            statement.setTime(1, accident.getTime());
             statement.setString(2, accident.getRegion());
             statement.setString(3, accident.getStreet());
             statement.setInt(4, accident.getPoints());
@@ -244,4 +242,7 @@ public class AccidentRepository {
         }
     }
 
+    public String getTable() {
+        return table;
+    }
 }

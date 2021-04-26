@@ -44,6 +44,13 @@ public class DerbyService {
     }
 
     /**
+     * Удаление таблицы
+     */
+    public void dropTable() throws SQLException {
+        repository.dropTable(repository.getTable());
+    }
+
+    /**
      * Удалить элемент
      * @param accident элемент
      * @throws SQLException Возникает при неправильном обращении к БД

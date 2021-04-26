@@ -2,8 +2,8 @@ package com.skifer.city.xmlformatter.model.accident;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.sql.Time;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -27,7 +27,7 @@ public class Accident {
     /**
      * Класс для регистрации максимального колличества ДТП и его времени
      */
-    public Accident(Integer maxAccidentCount, Date maxAccidentHour) {
+    public Accident(Integer maxAccidentCount, Time maxAccidentHour) {
         this.maxAccidentCount = maxAccidentCount;
         this.maxAccidentHour = new SimpleDateFormat("HH").format(maxAccidentHour);
     }
@@ -44,7 +44,7 @@ public class Accident {
         return maxAccidentHour;
     }
 
-    public void setMaxAccidentHour(Date maxAccidentHour) {
+    public void setMaxAccidentHour(Time maxAccidentHour) {
         this.maxAccidentHour = new SimpleDateFormat("HH").format(maxAccidentHour);
     }
 

@@ -3,8 +3,8 @@ package com.skifer.city.xmlformatter.model.trafic;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.sql.Time;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -45,7 +45,7 @@ public class Traffic {
         /**
          * Подкласс часов загруженности (за день их может быть несколько)
          */
-        public RushHours(Date start, Date end) {
+        public RushHours(Time start, Time end) {
             this.start = new SimpleDateFormat("HH").format(start);
             this.end = new SimpleDateFormat("HH").format(end);
         }
@@ -100,7 +100,7 @@ public class Traffic {
         /**
          * Подкласс для обозначения час пика
          */
-        public MaxRushHour(Date time) {
+        public MaxRushHour(Time time) {
             this.time = new SimpleDateFormat("HH").format(time);
         }
 
@@ -152,7 +152,7 @@ public class Traffic {
      * @param start время начала пробки
      * @param end время конца пробки
      */
-    public void addRushHours(Date start, Date end) {
+    public void addRushHours(Time start, Time end) {
         this.rushHours.add(new RushHours(start, end));
     }
 
@@ -160,7 +160,7 @@ public class Traffic {
         return maxRushHour;
     }
 
-    public void setMaxRushHour(Date maxRushHour) {
+    public void setMaxRushHour(Time maxRushHour) {
         this.maxRushHour.setTime(new SimpleDateFormat("HH").format(maxRushHour));
     }
 

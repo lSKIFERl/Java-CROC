@@ -1,6 +1,6 @@
 package com.skifer.city.database.model;
 
-import java.util.Date;
+import java.sql.Time;
 import java.util.Objects;
 
 /**
@@ -16,7 +16,7 @@ public class AccidentModel {
     /**
      * Время изменения загруженности или регистрации инцидента
      */
-    private Date time;
+    private Time time;
 
     /**
      * Район города
@@ -41,7 +41,7 @@ public class AccidentModel {
     /**
      * Класс модели событий изменения загруженности на дорогах и ДТП
      */
-    public AccidentModel(Integer id, Date time, String region, String street, Integer points, Boolean accident) {
+    public AccidentModel(Integer id, Time time, String region, String street, Integer points, Boolean accident) {
         if(points < 0 || points > 10)
             throw new IllegalArgumentException("Неправильный формат баллов пробки (0-10)");
         this.id = id;
@@ -55,7 +55,7 @@ public class AccidentModel {
     /**
      * Класс модели событий изменения загруженности на дорогах и ДТП
      */
-    public AccidentModel(Integer id, Date time, String region, String street, Integer points) {
+    public AccidentModel(Integer id, Time time, String region, String street, Integer points) {
         this(id, time, region, street, points, false);
     }
 
@@ -63,11 +63,11 @@ public class AccidentModel {
         return id;
     }
 
-    public Date getTime() {
+    public Time getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(Time time) {
         this.time = time;
     }
 
@@ -108,11 +108,19 @@ public class AccidentModel {
         if (this == o) return true;
         if (!(o instanceof AccidentModel)) return false;
         AccidentModel that = (AccidentModel) o;
-        return Objects.equals(getTime(), that.getTime()) &&
-                Objects.equals(getRegion(), that.getRegion()) &&
-                Objects.equals(getStreet(), that.getStreet()) &&
-                Objects.equals(getPoints(), that.getPoints()) &&
-                Objects.equals(getAccident(), that.getAccident());
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getTime(), that.getTime()) && Objects.equals(getRegion(), that.getRegion()) && Objects.equals(getStreet(), that.getStreet()) && Objects.equals(getPoints(), that.getPoints()) && Objects.equals(getAccident(), that.getAccident());
+    }
+
+    @Override
+    public String toString() {
+        return "AccidentModel{" +
+                "id=" + id +
+                ", time=" + time +
+                ", region='" + region + '\'' +
+                ", street='" + street + '\'' +
+                ", points=" + points +
+                ", accident=" + accident +
+                '}';
     }
 
     @Override

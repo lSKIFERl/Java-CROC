@@ -10,6 +10,7 @@ import com.skifer.city.xmlformatter.model.trafic.Traffic;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -64,19 +65,14 @@ public class Formatter {
         int maxTrafficPoints = 0;
         int trafficPoints = 0;
 
-        Date maxTrafficTime;
-        Date rushHoursStart = new Date();
-        Date rushHoursEnd = new Date();
-
-        rushHoursStart.setHours(0);
-        rushHoursStart.setMinutes(0);
-        rushHoursEnd.setHours(23);
-        rushHoursEnd.setMinutes(59);
+        Time maxTrafficTime;
+        Time rushHoursStart = null;
+        Time rushHoursEnd = null;
 
         int maxAccidentCount = 0;
         int accidentCount = 0;
         int lastHour = -1;
-        Date maxAccidentHour = null;
+        Time maxAccidentHour = null;
         for(AccidentModel row: rowData) {
             trafficPoints = row.getPoints();
             if(row.getTime().getHours() != lastHour) {
@@ -110,7 +106,7 @@ public class Formatter {
             }
         }
 
-        return new Day(new Date(), new Accident(maxAccidentCount, maxAccidentHour), traffic);
+        return new Day(new Time(new Date().getTime()), new Accident(maxAccidentCount, maxAccidentHour), traffic);
     }
 
 }
