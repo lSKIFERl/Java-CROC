@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -47,8 +48,11 @@ class DerbyServiceTest {
         rows.add(row3);
     }
 
+    /**
+     * Получение всех элементов
+     */
     @Test
-    void selectAll() throws SQLException {
+    void selectAll() {
         List<AccidentModel> expectedRows;
 
         try {
@@ -58,24 +62,86 @@ class DerbyServiceTest {
             throwables.printStackTrace();
         }    }
 
+    /**
+     * Получение объекта по столбцам
+     */
     @Test
     void selectWhere() {
-
+        try {
+            Assertions.assertEquals(service.selectWhere(Arrays.asList("street"), Arrays.asList("8 Марта")), Arrays.asList(row3));
+            Assertions.assertEquals(service.selectWhere(Arrays.asList("accident"), Arrays.asList(false)),
+                    Arrays.asList(row1, row3));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
+    /**
+     * Удаление элемента
+     */
     @Test
     void delete() {
+        List<AccidentModel> accidents = Arrays.asList(row1, row2);
+        try {
+            repository.delete(row3);
+            Assertions.assertEquals(service.selectAll(), accidents);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
+    /**
+     * Тест на удаление элемента по значениям в столбцах
+     */
     @Test
     void deleteWhere() {
+        List<AccidentModel> gameList = Arrays.asList(row1, row2);
+        try {
+            service.deleteWhere(Arrays.asList("region", "time"), Arrays.asList("Пашковка", new Time(18, 12, 27)));
+            Assertions.assertEquals(service.selectAll(), gameList);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
+    /**
+     * Тест на обновление элемента
+     */
     @Test
     void update() {
+        row1.setPoints(10);
+        try {
+            service.update(row1);
+            Assertions.assertEquals(service.selectWhere(Arrays.asList("points"), Arrays.asList(10)), Arrays.asList(row1));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
+    /**
+     * Тест на вставку элементов
+     */
     @Test
     void insert() {
+        AccidentModel row4 = new AccidentModel(4, new Time(new Date().getTime()), "Прикубанский округ", "Мира", 9, false);
+        try {
+            service.insert(row4);
+            Assertions.assertEquals(service.selectWhere(Arrays.asList("id"), Arrays.asList(4)), Arrays.asList(row4));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    /**
+     * Удаляем табличку и пытаемся к ней обратиться, чтобы пропинговать её
+     */
+    @Test
+    void dropTable() {
+        try {
+            service.dropTable();
+            Assertions.assertThrows(SQLException.class, () -> service.selectAll());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 }
