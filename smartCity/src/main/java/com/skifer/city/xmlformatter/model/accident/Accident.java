@@ -6,15 +6,27 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * Класс для регистрации максимального колличества ДТП и его времени
+ */
 @XmlRootElement(name = "accident")
 public class Accident {
 
+    /**
+     * Максимальное колличество ДТП за день
+     */
     @XmlElement(name = "Максимальное количество ДТП")
     private Integer maxAccidentCount;
 
+    /**
+     * Час максимального колличества ДТП
+     */
     @XmlElement(name = "Час максимального количества ДТП")
     private String maxAccidentHour;
 
+    /**
+     * Класс для регистрации максимального колличества ДТП и его времени
+     */
     public Accident(Integer maxAccidentCount, Date maxAccidentHour) {
         this.maxAccidentCount = maxAccidentCount;
         this.maxAccidentHour = new SimpleDateFormat("HH").format(maxAccidentHour);

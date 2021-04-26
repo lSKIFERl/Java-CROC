@@ -14,20 +14,37 @@ import java.util.Objects;
 @XmlRootElement(name = "traffic")
 public class Traffic {
 
-    public Traffic() {
-    }
+    /**
+     * Класс загруженности дорог
+     */
+    public Traffic() {}
 
+    /**
+     * Подкласс часов загруженности (за день их может быть несколько)
+     */
     private class RushHours {
 
+        /**
+         * Самые нагруженные часы
+         */
         @XmlAttribute
         private final String name = "Самые нагруженные часы";
 
+        /**
+         * Время начала пробки
+         */
         @XmlElement(name = "С")
         private String start;
 
+        /**
+         * Время конца пробки
+         */
         @XmlElement(name = "До")
         private String end;
 
+        /**
+         * Подкласс часов загруженности (за день их может быть несколько)
+         */
         public RushHours(Date start, Date end) {
             this.start = new SimpleDateFormat("HH").format(start);
             this.end = new SimpleDateFormat("HH").format(end);
@@ -63,14 +80,26 @@ public class Traffic {
         }
     }
 
+    /**
+     * Подкласс для обозначения час пика
+     */
     private class MaxRushHour {
 
+        /**
+         * Имя аттрибута
+         */
         @XmlAttribute
         private final String name = "Час пик";
 
+        /**
+         * Час пик
+         */
         @XmlElement
         private String time;
 
+        /**
+         * Подкласс для обозначения час пика
+         */
         public MaxRushHour(Date time) {
             this.time = new SimpleDateFormat("HH").format(time);
         }
@@ -118,6 +147,11 @@ public class Traffic {
         this.rushHours = rushHours;
     }
 
+    /**
+     * Добавление пробки
+     * @param start время начала пробки
+     * @param end время конца пробки
+     */
     public void addRushHours(Date start, Date end) {
         this.rushHours.add(new RushHours(start, end));
     }

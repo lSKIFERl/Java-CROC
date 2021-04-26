@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+/**
+ * Класс-проводник для БД Derby
+ */
 public class DerbyProvider {
 
     /**

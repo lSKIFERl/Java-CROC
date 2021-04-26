@@ -14,22 +14,51 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Класс позволяющий перевести данные из таблицы в формат модели Day
+ */
 public class Formatter {
 
+    /**
+     * Проводник для БД Derby
+     */
     private DerbyProvider provider;
+    /**
+     * Репозиторий для работы с моделью БД
+     */
     private AccidentRepository repository;
+    /**
+     * Сервис для доступа к основным действиям над БД
+     */
     private DerbyService service;
 
+    /**
+     * Модель дня
+     */
     private Day day;
+    /**
+     * Модель максимального колличества ДТП и его времени
+     */
     private Accident accident;
+    /**
+     * Модель загруженности на дорогах
+     */
     private Traffic traffic;
 
+    /**
+     * Класс позволяющий перевести данные из таблицы в формат модели Day
+     * @param table имя таблицы
+     */
     public Formatter(String table) throws IOException, SQLException {
         provider = new DerbyProvider();
         repository= new AccidentRepository(provider.getDataSource(), table);
         service = new DerbyService(repository);
     }
 
+    /**
+     * Преобразователь данных БД в нужную нам модель
+     * @return модель {@link Day}
+     */
     public Day fromDBToXML() throws SQLException {
         List<AccidentModel> rowData = service.selectAll();
         int maxTrafficPoints = 0;
