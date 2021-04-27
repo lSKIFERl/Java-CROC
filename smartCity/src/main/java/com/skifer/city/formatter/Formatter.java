@@ -41,10 +41,6 @@ public class Formatter {
      * Модель максимального колличества ДТП и его времени
      */
     private Accident accident;
-    /**
-     * Модель загруженности на дорогах
-     */
-    private Traffic traffic;
 
     /**
      * Класс позволяющий перевести данные из таблицы в формат модели Day
@@ -76,14 +72,14 @@ public class Formatter {
         for(AccidentModel row: rowData) {
             trafficPoints = row.getPoints();
             if(row.getTime().getHours() != lastHour) {
-                if(accidentCount > maxAccidentCount) {
-                    maxAccidentCount = accidentCount;
-                    maxAccidentHour = row.getTime();
-                }
                 accidentCount = 0;
-                if(trafficPoints > maxTrafficPoints) {
-                    maxTrafficPoints = trafficPoints;
-                }
+            }
+            if(trafficPoints > maxTrafficPoints) {
+                maxTrafficPoints = trafficPoints;
+            }
+            if(accidentCount > maxAccidentCount) {
+                maxAccidentCount = accidentCount;
+                maxAccidentHour = row.getTime();
             }
             if(row.getAccident()) {
                 accidentCount++;
@@ -95,18 +91,22 @@ public class Formatter {
         maxTrafficTime = pointsData.get(0).getTime();
         trafficPerDay.setMaxRushHour(maxTrafficTime);
         for(AccidentModel traffic: rowData) {
-            if(traffic.getPoints() > (pointsData.get(0).getPoints() * 0.66) && rushHoursEnd == null) {
+            if(traffic.getPoints() > (pointsData.get(0).getPoints() * 0.5) && rushHoursStart == null && rushHoursEnd == null) {
                 rushHoursStart = traffic.getTime();
             }
-            if (traffic.getPoints() < (pointsData.get(0).getPoints() * 0.66 + 1) && rushHoursStart != null) {
+            if (traffic.getPoints() < (pointsData.get(0).getPoints() * 0.5) &&
+                    rushHoursStart != null) {
                 rushHoursEnd = traffic.getTime();
                 trafficPerDay.addRushHours(rushHoursStart, rushHoursEnd);
                 rushHoursStart = null;
                 rushHoursEnd = null;
             }
         }
-
-        return new Day(new Time(new Date().getTime()), new Accident(maxAccidentCount, maxAccidentHour), traffic);
+        if (rushHoursStart != null && rushHoursEnd == null) {
+            rushHoursEnd = rowData.get(rowData.size() - 1).getTime();
+            trafficPerDay.addRushHours(rushHoursStart, rushHoursEnd);
+        }
+        return new Day(new Time(new Date().getTime()), new Accident(maxAccidentCount, maxAccidentHour), trafficPerDay);
     }
 
 }

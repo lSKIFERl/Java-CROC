@@ -42,18 +42,6 @@ public class Converter {
     }
 
     /**
-     * Десериализация из xml.
-     *
-     * @param xml xml
-     * @param type тип объекта
-     * @param <T> тип
-     * @return объект
-     */
-    public <T> T fromXml(String xml, Class<T> type) throws IOException {
-        return createXmlMapper().readValue(xml, type);
-    }
-
-    /**
      * Создаём настроенный mapper JAXB.
      * @return mapper
      */

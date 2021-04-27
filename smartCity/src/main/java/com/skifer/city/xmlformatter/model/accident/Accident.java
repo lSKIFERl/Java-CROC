@@ -9,19 +9,18 @@ import java.util.Objects;
 /**
  * Класс для регистрации максимального колличества ДТП и его времени
  */
-@XmlRootElement(name = "accident")
 public class Accident {
 
     /**
      * Максимальное колличество ДТП за день
      */
-    @XmlElement(name = "Максимальное количество ДТП")
+    @XmlElement(name = "Максимальное_количество_ДТП")
     private Integer maxAccidentCount;
 
     /**
      * Час максимального колличества ДТП
      */
-    @XmlElement(name = "Час максимального количества ДТП")
+    @XmlElement(name = "Час_максимального_количества_ДТП")
     private String maxAccidentHour;
 
     /**
@@ -32,16 +31,11 @@ public class Accident {
         this.maxAccidentHour = new SimpleDateFormat("HH").format(maxAccidentHour);
     }
 
-    public Integer getMaxAccidentCount() {
-        return maxAccidentCount;
+    public Accident() {
     }
 
     public void setMaxAccidentCount(Integer maxAccidentCount) {
         this.maxAccidentCount = maxAccidentCount;
-    }
-
-    public String getMaxAccidentHour() {
-        return maxAccidentHour;
     }
 
     public void setMaxAccidentHour(Time maxAccidentHour) {
@@ -53,11 +47,11 @@ public class Accident {
         if (this == o) return true;
         if (!(o instanceof Accident)) return false;
         Accident accident = (Accident) o;
-        return Objects.equals(getMaxAccidentCount(), accident.getMaxAccidentCount()) && Objects.equals(getMaxAccidentHour(), accident.getMaxAccidentHour());
+        return Objects.equals(maxAccidentCount, accident.maxAccidentCount) && Objects.equals(maxAccidentHour, accident.maxAccidentHour);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getMaxAccidentCount(), getMaxAccidentHour());
+        return Objects.hash(maxAccidentCount, maxAccidentHour);
     }
 }

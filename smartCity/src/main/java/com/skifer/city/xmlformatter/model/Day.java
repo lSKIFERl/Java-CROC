@@ -5,6 +5,7 @@ import com.skifer.city.xmlformatter.model.trafic.Traffic;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
@@ -12,24 +13,25 @@ import java.util.Objects;
 /**
  * Класс дня, в котором замеряются колличество ДТП и нагруженность трафика
  */
+@XmlRootElement
 public class Day {
 
     /**
      * Дата
      */
-    @XmlAttribute(name = "Дата")
+    @XmlAttribute
     private String date;
 
     /**
-     * Час Пик
+     * Записи о ДТП
      */
-    @XmlElement(name = "Час Пик")
-    private Accident accident;
+    @XmlElement
+    private Accident accidents;
 
     /**
      * Загруженность
      */
-    @XmlElement(name = "Загруженность")
+    @XmlElement
     private Traffic traffic;
 
     /**
@@ -40,28 +42,19 @@ public class Day {
      */
     public Day(Date date, Accident accident, Traffic traffic) {
         this.date = new SimpleDateFormat("d MMMM yyyy").format(date);
-        this.accident = accident;
+        this.accidents = accident;
         this.traffic = traffic;
     }
 
-    public String getDate() {
-        return date;
+    public Day() {
     }
 
     public void setDate(String date) {
         this.date = date;
     }
 
-    public Accident getAccident() {
-        return accident;
-    }
-
     public void setAccident(Accident accident) {
-        this.accident = accident;
-    }
-
-    public Traffic getTraffic() {
-        return traffic;
+        this.accidents = accident;
     }
 
     public void setTraffic(Traffic traffic) {
@@ -73,11 +66,11 @@ public class Day {
         if (this == o) return true;
         if (!(o instanceof Day)) return false;
         Day day = (Day) o;
-        return Objects.equals(date, day.date) && Objects.equals(accident, day.accident) && Objects.equals(traffic, day.traffic);
+        return Objects.equals(date, day.date) && Objects.equals(accidents, day.accidents) && Objects.equals(traffic, day.traffic);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(date, accident, traffic);
+        return Objects.hash(date, accidents, traffic);
     }
 }
