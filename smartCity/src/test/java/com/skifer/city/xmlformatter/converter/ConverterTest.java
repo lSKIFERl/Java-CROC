@@ -9,11 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.io.IOException;
 import java.sql.Time;
 import java.util.Date;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ConverterTest {
 

@@ -1,12 +1,11 @@
 package com.skifer.city.formatter;
 
 import com.skifer.city.database.model.AccidentModel;
-import com.skifer.city.database.provider.DerbyProvider;
+import com.skifer.city.database.provider.DataSourceProvider;
 import com.skifer.city.database.repository.AccidentRepository;
-import com.skifer.city.database.service.DerbyService;
+import com.skifer.city.database.service.AccidentService;
 import com.skifer.city.xmlformatter.converter.Converter;
 import com.skifer.city.xmlformatter.model.Day;
-import com.skifer.city.xmlformatter.model.trafic.Traffic;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,22 +17,20 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class FormatterTest {
 
-    DerbyProvider provider;
+    DataSourceProvider provider;
     AccidentRepository repository;
-    DerbyService service;
+    AccidentService service;
 
     @BeforeEach
     void setUp() throws IOException, SQLException {
-        provider = new DerbyProvider();
+        provider = new DataSourceProvider();
         repository = new AccidentRepository(provider.getDataSource(), "SimpleDay");
-        service = new DerbyService(repository);
+        service = new AccidentService(repository);
         service.dropTable();
         repository = new AccidentRepository(provider.getDataSource(), "SimpleDay");
-        service = new DerbyService(repository);
+        service = new AccidentService(repository);
     }
 
     /**

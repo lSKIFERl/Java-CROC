@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Класс-сервис для работы с моделью пробок и ДТП
  */
-public class DerbyService {
+public class AccidentService {
 
     /**
      * Репозиторий для работы с моделью пробок и ДТП
@@ -19,7 +19,7 @@ public class DerbyService {
     /**
      * Класс-сервис для работы с моделью пробок и ДТП
      */
-    public DerbyService(AccidentRepository repository) {
+    public AccidentService(AccidentRepository repository) {
         this.repository = repository;
     }
 

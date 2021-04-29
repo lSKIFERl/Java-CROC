@@ -1,8 +1,6 @@
 package com.skifer.city.xmlformatter.model.trafic;
 
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

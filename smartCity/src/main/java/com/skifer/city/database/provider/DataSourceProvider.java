@@ -10,7 +10,7 @@ import java.util.Properties;
 /**
  * Класс-проводник для БД Derby
  */
-public class DerbyProvider {
+public class DataSourceProvider {
 
     /**
      * Подключения
@@ -26,7 +26,7 @@ public class DerbyProvider {
      * Инициализируем драйвер
      * @throws IOException Выбросит, если произойдёт ошибка во время подгрузки фалйа properties
      */
-    public DerbyProvider() throws IOException {
+    public DataSourceProvider() throws IOException {
         loadProperties();
     }
 
