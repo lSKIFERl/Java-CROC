@@ -1,0 +1,8 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+**/out/
+**/*.iml
+**/.idea
+hw7/Games/
+hw7/derby.log
